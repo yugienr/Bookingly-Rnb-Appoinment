@@ -1,0 +1,137 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bookingly - Appointment Booking & Rental Plugin\n"
+"POT-Creation-Date: 2023-11-15 09:16+0600\n"
+"PO-Revision-Date: 2023-11-15 09:16+0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 3.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: bookingly.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+
+#: bookingly.php:34
+#, php-format
+msgid ""
+"\"Bookingly\" requires \"RnB - WooCommerce Booking & Rental\" plugin to be "
+"installed and active. You can download %s from here."
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:22
+msgid "Booking Slots"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:34
+msgid "Slot Full Name<span class=\"bookingly-required\">*<span>"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:37
+msgid "Full Name"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:38
+msgid "Ex. 12pm - 1pm"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:39
+msgid ""
+"This value will show as slot in front-end when someone click date from "
+"calendar."
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:47
+msgid "Start Time<span class = \"bookingly-required\">*<span>"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:50
+msgid "Start Time"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:51
+msgid "Ex. 12"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:52 includes/Admin/AdminGenerator.php:65
+msgid "Enter this value as 24-hour format"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:60
+msgid "End Time<span class=\"bookingly-required\">*<span>"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:63
+msgid "End Time"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:64
+msgid "Ex. 13"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:73 includes/Admin/AdminGenerator.php:77
+msgid "Slot Price"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:76
+msgid "Cost"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:78
+msgid "This value is option"
+msgstr ""
+
+#: includes/Admin/AdminGenerator.php:103
+msgid "Appointment Pricing"
+msgstr ""
+
+#: includes/Admin/Menu.php:21 includes/Admin/Menu.php:22
+msgid "Appointment Slots"
+msgstr ""
+
+#: includes/Ajax.php:28
+msgid "Nonce verification failed!"
+msgstr ""
+
+#: includes/Ajax.php:78
+msgid "Perform your operation"
+msgstr ""
+
+#: includes/Library/CMB2_Tags/cmb2-field-type-tags.php:18
+msgid "Add"
+msgstr ""
+
+#: includes/functions.php:44
+msgid "Choose"
+msgstr ""
+
+#: templates/bookingly/slots.php:2
+msgid "Sorry! no slots available"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Bookingly - Appointment Booking & Rental Plugin"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://redq.io"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Appointment Booking & Rental Plugin"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "redqteam"
+msgstr ""
