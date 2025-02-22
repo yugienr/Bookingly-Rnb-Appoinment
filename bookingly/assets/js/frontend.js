@@ -3,25 +3,27 @@
   const nonce = bookingly.nonce;
 
   const getAvailableSlot = (selectedDate, inventoryId, productId) => {
-    $.ajax({
-      type: "POST",
-      url: ajaxUrl,
-      data: {
-        action: "get_available_slot",
-        selectedDate,
-        inventoryId,
-        productId,
-        nonce,
-      },
-      success: (response) => {
-        const { slotsFormatted } = response.data;
-        $(".bookingly-slots").html(slotsFormatted);
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
-  };
+  console.log("Sending data:", { selectedDate, inventoryId, productId });
+  $.ajax({
+    type: "POST",
+    url: ajaxUrl,
+    data: {
+      action: "get_available_slot",
+      selectedDate,
+      inventoryId,
+      productId,
+      nonce,
+    },
+    success: (response) => {
+      console.log("Received response:", response);
+      const { slotsFormatted } = response.data;
+      $(".bookingly-slots").html(slotsFormatted);
+    },
+    error: (error) => {
+      console.error(error);
+    },
+  });
+};
 
   const disableDates = (date) => {
     if (bookingly_data.weekends.indexOf(date.getDay()) !== -1) {
@@ -39,17 +41,25 @@
   const [checkInDate, checkOutDate] = selectedDates;
   const inventoryId = $("#booking_inventory").val();
   const productId = $("#booking_inventory").data("post-id");
+  console.log("Date changed:", { checkInDate, checkOutDate, inventoryId, productId });
   getAvailableSlot(checkInDate, checkOutDate, inventoryId, productId);
 };
 
   flatpickr("#datepicker", {
-    locale: bookingly_data.lang,
-    dateFormat: "Y-m-d",
-    minDate: "today",
-    inline: true,
-    disable: [disableDates],
-    onChange: onDateChange,
-  });
+  locale: bookingly_data.lang,
+  dateFormat: "Y-m-d",
+  minDate: "today",
+  inline: true,
+  disable: [disableDates],
+  onChange: (selectedDates, dateStr) => {
+    console.log("Date changed:", selectedDates, dateStr);  // Log date change
+    const [checkInDate, checkOutDate] = selectedDates;
+    const inventoryId = $("#booking_inventory").val();
+    const productId = $("#booking_inventory").data("post-id");
+    console.log("Fetching available slots with:", { checkInDate, checkOutDate, inventoryId, productId });  // Log parameters
+    getAvailableSlot(checkInDate, checkOutDate, inventoryId, productId);
+  },
+});
   //End handling datepicker
 
   const updateBookingTime = (start_time, end_time, slot_id) => {
