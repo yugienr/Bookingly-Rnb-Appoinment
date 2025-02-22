@@ -23,35 +23,20 @@ class Ajax
      *
      * @return void
      */
-    public function get_available_slot()
-    {
-        if (!wp_verify_nonce($_REQUEST['nonce'], 'bookingly-slots')) {
-            wp_send_json_error([
-                'message' => __('Nonce verification failed!', 'bulky')
-            ]);
-        }
+    public function get_available_slot() {
+  $checkInDate = $_POST['check_in_date'];
+  $checkOutDate = $_POST['check_out_date'];
+  $inventoryId = $_POST['inventoryId'];
+  $productId = $_POST['productId'];
 
-        global $wpdb;
-
-        $productId   = $_POST['productId'];
-        $inventoryId = $_POST['inventoryId'];
-        $date        = $_POST['selectedDate'];
-
-        $slots = bookingly_get_slots($inventoryId);
-
-        $pickupDate = "$date 00:00:00";
-        $returnDate = "$date 23:59:59";
-        $query = $wpdb->prepare(
-            "SELECT * FROM {$wpdb->prefix}rnb_availability
-            WHERE pickup_datetime >= %s AND return_datetime <= %s
-            AND product_id=%d
-            AND inventory_id=%d",
-            $pickupDate,
-            $returnDate,
-            $productId,
-            $inventoryId
-        );
-        $results = $wpdb->get_results($query);
+  global $wpdb;
+  $query = $wpdb->prepare(
+    "SELECT * FROM {$wpdb->prefix}rnb_availability
+    WHERE check_in_date >= %s AND check_out_date <= %s
+    AND product_id=%d AND inventory_id=%d",
+    $checkInDate, $checkOutDate, $productId, $inventoryId
+  );
+  $results = $wpdb->get_results($query);
 
         $bookedSlots = [];
         foreach ($results as $result) {
