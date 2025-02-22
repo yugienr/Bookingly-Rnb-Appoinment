@@ -25,48 +25,39 @@ class RnBHandler
         add_filter('rnb_allow_free_booking', [$this, 'allow_free_booking'], 10, 3);
     }
 
-    public function calculate_cost_args($args, $post_form, $inventory_id, $product_id)
-    {
-        if (!(isset($post_form['slot_id']) && !empty($post_form['slot_id']))) {
-            return $args;
-        }
+    public function calculate_cost_args($args, $post_form, $inventory_id, $product_id) {
+  if (isset($post_form['check_in_date']) && isset($post_form['check_out_date'])) {
+    $args['check_in_date'] = $post_form['check_in_date'];
+    $args['check_out_date'] = $post_form['check_out_date'];
+    $args['room_type'] = $post_form['room_type'];
+  }
+  return $args;
+}
 
-        $args['appointment_slot'] = $this->get_appointment_slot_data($post_form['slot_id']);
+public function calculate_duration_cost($prices, $inventoryId, $productId, $durations, $pricing, $args) {
+  if (isset($args['check_in_date']) && isset($args['check_out_date'])) {
+    $checkInDate = new \DateTime($args['check_in_date']);
+    $checkOutDate = new \DateTime($args['check_out_date']);
+    $interval = $checkInDate->diff($checkOutDate)->days;
 
-        return $args;
-    }
+    $price = [
+      'costByDays' => $interval * $pricing['daily_rate'],
+      'costByHours' => 0
+    ];
 
-    public function calculate_duration_cost($prices, $inventoryId, $productId, $durations, $pricing, $args)
-    {
-        if (!(isset($args['appointment_slot']) && !empty($args['appointment_slot']))) {
-            return $prices;
-        }
+    return $price;
+  }
+  return $prices;
+}
 
-        $result = $this->calculate_appointment_slot_price($args['appointment_slot']);
-
-        $price = [
-            'costByHours' => $result['price'],
-            'costByDays' => 0
-        ];
-
-        return $price;
-    }
-
-    public function prepared_form_data($data, $post_form)
-    {
-        if (!(isset($post_form['slot_id']) && !empty($post_form['slot_id']))) {
-            return $data;
-        }
-
-        $result = $this->calculate_appointment_slot_price($post_form['slot_id']);
-        if (empty($result)) {
-            return $data;
-        }
-
-        $data['appointment_info'] = $result;
-
-        return $data;
-    }
+public function prepared_form_data($data, $post_form) {
+  if (isset($post_form['check_in_date']) && isset($post_form['check_out_date'])) {
+    $data['check_in_date'] = $post_form['check_in_date'];
+    $data['check_out_date'] = $post_form['check_out_date'];
+    $data['room_type'] = $post_form['room_type'];
+  }
+  return $data;
+}
 
     public function inventory_quantity_by_date($quantity, $product_id, $args)
     {
