@@ -36,11 +36,11 @@
   };
 
   const onDateChange = (selectedDates, dateStr) => {
-    console.log(selectedDates, "selectedDates");
-    const inventoryId = $("#booking_inventory").val();
-    const productId = $("#booking_inventory").data("post-id");
-    getAvailableSlot(dateStr, inventoryId, productId);
-  };
+  const [checkInDate, checkOutDate] = selectedDates;
+  const inventoryId = $("#booking_inventory").val();
+  const productId = $("#booking_inventory").data("post-id");
+  getAvailableSlot(checkInDate, checkOutDate, inventoryId, productId);
+};
 
   flatpickr("#datepicker", {
     locale: bookingly_data.lang,
@@ -234,3 +234,77 @@ jQuery(function ($) {
     }
   });
 });
+
+(function ($) {
+  const ajaxUrl = bookingly.ajax_url;
+  const nonce = bookingly.nonce;
+
+  const getAvailableRooms = (checkInDate, checkOutDate) => {
+    $.ajax({
+      type: "POST",
+      url: ajaxUrl,
+      data: {
+        action: "get_available_rooms",
+        checkInDate,
+        checkOutDate,
+        nonce,
+      },
+      success: (response) => {
+        const { roomsFormatted } = response.data;
+        $(".bookingly-rooms").html(roomsFormatted);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  };
+
+  const disableDates = (date) => {
+    if (bookingly_data.weekends.indexOf(date.getDay()) !== -1) {
+      return true;
+    }
+
+    const formattedMonth = String(date.getMonth() + 1).padStart(2, "0");
+    const formattedDay = String(date.getDate()).padStart(2, "0");
+    const formattedDate = `${date.getFullYear()}-${formattedMonth}-${formattedDay}`;
+
+    return bookingly_data.blocked_dates.indexOf(formattedDate) !== -1;
+  };
+
+  flatpickr("#check-in-datepicker", {
+    locale: bookingly_data.lang,
+    dateFormat: "Y-m-d",
+    minDate: "today",
+    inline: true,
+    disable: [disableDates],
+    onChange: (selectedDates, dateStr) => {
+      const checkOutDate = $("#check-out-datepicker").val();
+      if (checkOutDate) {
+        getAvailableRooms(dateStr, checkOutDate);
+      }
+    },
+  });
+
+  flatpickr("#check-out-datepicker", {
+    locale: bookingly_data.lang,
+    dateFormat: "Y-m-d",
+    minDate: "today",
+    inline: true,
+    disable: [disableDates],
+    onChange: (selectedDates, dateStr) => {
+      const checkInDate = $("#check-in-datepicker").val();
+      if (checkInDate) {
+        getAvailableRooms(checkInDate, dateStr);
+      }
+    },
+  });
+
+  $(document).ready(() => {
+    // Initial load to display rooms if dates are already set
+    const checkInDate = $("#check-in-datepicker").val();
+    const checkOutDate = $("#check-out-datepicker").val();
+    if (checkInDate && checkOutDate) {
+      getAvailableRooms(checkInDate, checkOutDate);
+    }
+  });
+})(jQuery);
