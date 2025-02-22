@@ -78,6 +78,19 @@ if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
     <input type="hidden" name="currency-symbol" class="currency-symbol" value="<?php echo get_woocommerce_currency_symbol(); ?>">
     <input type="hidden" class="product_id" name="add-to-cart" value="<?php echo esc_attr($product_id); ?>" />
     <input type="hidden" class="quote_price" name="quote_price" value="0" />
+<!-- New fields for hotel booking -->
+<label for="check-in-date">Check-In Date</label>
+<input type="date" name="check_in_date" id="check-in-date">
+
+<label for="check-out-date">Check-Out Date</label>
+<input type="date" name="check_out_date" id="check-out-date">
+
+<label for="room-type">Room Type</label>
+<select name="room_type" id="room-type">
+  <option value="single">Single</option>
+  <option value="double">Double</option>
+  <option value="suite">Suite</option>
+</select>
 
     <?php
     if ($conditional_data['booking_layout'] === 'layout_one') :
